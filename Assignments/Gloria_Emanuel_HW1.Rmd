@@ -1,0 +1,74 @@
+---
+title: "Linear Models: Homework 1"
+author: "Your Name"
+date: "2024-2025"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Answers to the questions
+
+## Question 1a
+
+Concise, to-the-point answer to question 1a
+
+## Question 1b
+
+Concise, to-the-point answer to question 1b
+
+## Question 1c
+
+Concise, to-the-point answer to question 1c
+
+## Question 1d
+
+Concise, to-the-point answer to question 1d
+
+## Question 2
+
+Concise, to-the-point answer to question 2
+\newpage
+
+# Appendix with R code
+
+## Question 1
+
+```{r}
+# Change the path to the data file in the following line
+load(file="~/dropbox/education/LIMO/homeworks/2425/HW1/mice.RData")
+str(mice)
+
+plot(mice$concentration,mice$IgG1)
+```
+
+## Question 2
+
+```{r}
+set.seed(2678)
+
+p1<-p2<-vector(length=1000)
+for(i in 1:1000) {
+  conc2<-mice$concentration
+  mice2<-data.frame(
+    concentration=mice$concentration,
+    IgG1=3+0.83*conc2+rnorm(62,sd=0.9)
+  )
+  conc1<-mice$concentration[mice$concentration<2]
+  mice1<-data.frame(
+    concentration=conc1,
+    IgG1=3+0.83*conc1+rnorm(60,sd=0.9)
+  )
+  
+  m2<-lm(IgG1~concentration,data=mice2)
+  p2[i]<-summary(m2)$coef[2,4]      
+  
+  m1<-lm(IgG1~concentration,data=mice1)
+  p1[i]<-summary(m1)$coef[2,4]      
+}
+
+mean(p2<0.05)
+mean(p1<0.05)
+```

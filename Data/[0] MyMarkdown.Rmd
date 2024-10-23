@@ -1,0 +1,56 @@
+---
+title: "Linear Models"
+author: "Your Name"
+date: "20/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+This is a template R Markdown file. 
+
+We advise you to repeat the examples and make the exercises in your own local R Markdown or Notebook file. You may use this file as a template, but use your own expertise and imagination to make it happen. 
+You will never be asked to share this file with the lecturers. 
+
+In the next section I've copied-and-pasted some of the R code from the html course notes on GitHub. 
+
+# Galton's example
+
+Make sure that you download the data and that the paths (directories) to the files are set correctly at your local computer. Adopt the habbit to comment the R code yourself and formulate conclusions, refer to course notes .... whatever you think is meaningful and helpful for you. 
+
+The next few lines will read the Galton data from the source data file. 
+```{r}
+Galton<-read.csv("Data/Galton.tab",sep="\t")
+head(Galton)
+```
+
+Next we select the relevant data and ...
+
+```{r}
+Galton.sons<-Galton %>%
+  filter(gender=="M") %>%
+  group_by(family) %>%
+  slice(1) %>%
+  ungroup %>%
+  mutate(father.cm=father*2.54,
+         son.cm=height*2.54) %>%
+  select(father.cm, son.cm)
+glimpse(Galton.sons)
+```
+
+Let's graphically explore the data ...
+
+```{r}
+ggplot(Galton.sons,
+       aes(x=father.cm, y=son.cm)) +
+  geom_point(color="blue") +
+  xlab("length of father (cm)") + ylab("length of son (cm)") +
+  theme(axis.title=element_text(size=15), axis.text = element_text(size=15))
+```
+
+
+
