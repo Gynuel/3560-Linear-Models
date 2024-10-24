@@ -1,6 +1,6 @@
 ---
 title: "Linear Models: Homework 1"
-author: "Your Name"
+author: "Emanuel Gloria"
 date: "2024-2025"
 output: pdf_document
 ---
@@ -13,23 +13,42 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Question 1a
 
-Concise, to-the-point answer to question 1a
+Based on the regression analysis result, the effect of ADDF17 on the mean IgG1 blood level concentration is positive and statistically significant. Specifically, for every 1 unit increase of ADDF17 concentration, the mean IgG1 concentration increases by approximately 1.071 mg/mL on average. This suggests that higher concentration of ADDF17 are associated with increased IgG1 levels in the blood.
 
 ## Question 1b
 
-Concise, to-the-point answer to question 1b
+The standard error of the coefficients are 0.17 and 0.69 for the intercept and ADDF17, respectively. While the mean square of the residual standard error is 0.9127\^2 or 0.833 with 58 degrees of freedom. This indicates a moderate level of precision in the estimate of the effect.
+
+The 95% confidence interval for the effect size is (0.441, 1.702), meaning we are 95% confident that the true increase in IgG1 per unit increase in ADDF17 concentration lies between 0.437 mg/mL and 1.705 mg/mL. The relatively wide interval suggests some imprecision in the estimate, but the positive effect remains significant.
 
 ## Question 1c
 
-Concise, to-the-point answer to question 1c
+We are testing whether the concentration of ADDF17 has a statistical significant effect on IgG1 levels. A non-zero slope Beta in the regression would indicate that ADDF17 concentration influences IgG1 levels.
+
+Thus, our hypotheses are:
+
+Ho: Beta = 0, where Beta is the slope (the effect of concentration)
+
+Ha: Beta != 0, meaning, there is a significant effect of ADDF17 on the mean of IgG1 levels
+
+Based on the results at 5% level of significance, there is a significant effect of ADDF17 on the mean of IgG1 blood levels. Therefore, changes in ADDF17 concentration are statistically associated with the changes in IgG1.
 
 ## Question 1d
 
-Concise, to-the-point answer to question 1d
+After excluding the data for the mice that received a dose of 2 units, the effects of ADDF17 concentration on IgG1 levels is no longer statistically significant at 5% level. Removing those data reduced the range of concentrations, limiting the observed effect and increasing uncertainty. The high dose of 2 units likely had a stronger effect on IgG1 levels, and without it, the overall relationship between ADDF17 and IgG1 weakened. Hence, less statistically significant.
 
 ## Question 2
 
-Concise, to-the-point answer to question 2
+This simulation study uses repeated sampling (1000 times) to interpret the effect of ADDF17 concentration on IgG1 levels, applying the principle of sampling from a known data-generating model with epsilon represented by N(0,0.9).In this context, the model assumes we know the "true" relationship between concentration and IgG1 levels, using specified parameters to simulate data.
+
+The averaging done on p2 and p1 in the simulation study measures how often the p-value from each regression model falls below the significance threshold of 0.05, indicating a statistically significant result. 
+
+- With the full dataset (mean(p2 < 0.05) = 0.707): On average, 70% of the time, the p-value is below 0.05, meaning that we detect a significant effect of ADDF17 concentration in about three-quarters of the simulations. This shows strong evidence of a relationship when the full data is used, including the higher concentrations.
+
+- Without the 2-unit data (mean(p1 < 0.05) = 0.21): Only 21% of the time, the p-value is below 0.05, meaning that the concentration effect is detected far less frequently. Excluding the higher concentration leads to a much lower chance of finding statistical significance.
+
+The comparison highlights that including the 2-unit dose increases the power to detect the effect of ADDF17 on IgG1 levels. Averaging the p-values from repeated simulations demonstrates how crucial the 2-unit data is in consistently revealing the true relationship between concentration and IgG1 levels. Without the higher dose, the model has much less power to detect the effect.
+
 \newpage
 
 # Appendix with R code
@@ -37,11 +56,35 @@ Concise, to-the-point answer to question 2
 ## Question 1
 
 ```{r}
-# Change the path to the data file in the following line
-load(file="~/dropbox/education/LIMO/homeworks/2425/HW1/mice.RData")
-str(mice)
+# Add the data
+library(dplyr)
+load("/Users/eman/Documents/3560_LIMO/Assignments/mice.RData")
+mice2 <- mice %>% filter(concentration != 2) # Remove outlier
 
-plot(mice$concentration,mice$IgG1)
+# Plot the data to visualize the relationship
+par(mfrow = c(1,2))
+
+plot(mice$concentration, mice$IgG1, 
+     main="ADDF17 vs IgG1 Levels (Full)",
+     xlab="ADDF17 (µg/mL)", 
+     ylab="IgG1 (mg/mL)",
+     pch=19, col="blue")
+
+plot(mice2$concentration, mice2$IgG1, 
+     main="ADDF17 vs IgG1 Levels (~Full)",
+     xlab="ADDF17 (µg/mL)", 
+     ylab="IgG1 (mg/mL)",
+     pch=19, col="red")
+
+
+m = lm(IgG1 ~ concentration, data = mice)
+m2 = lm(IgG1 ~ concentration, data = mice2)
+
+summary(m)
+summary(m2)
+
+confint(m)
+confint(m2)
 ```
 
 ## Question 2
