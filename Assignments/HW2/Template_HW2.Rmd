@@ -1,6 +1,6 @@
 ---
 title: "Linear Models: Homework 2"
-author: "Your Name"
+author: "Emanuel Gloria"
 date: "2024-2025"
 output: pdf_document
 ---
@@ -46,7 +46,7 @@ Concise, to-the-point answer to question 1g
 
 ```{r}
 # Change the path to the data file in the following line
-load(file="~/dropbox/education/LIMO/homeworks/2425/HW2/exam.RData")
+load(file="/Users/eman/Documents/3560_LIMO/Assignments/HW2/exam.RData")
 
 str(exam)
 
