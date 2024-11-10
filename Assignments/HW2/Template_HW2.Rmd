@@ -13,33 +13,33 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Question 1a
 
-The linear model "m1" suggests that only the 'homeworks' variable has a significant positive effect on exam scores, with each additional point in homeworks increaseing the score by 21.64. The specialization 'Biostat', 'Epi', and 'Bioinf' show positive coefficients, but none are statistically significant except for 'Bioinf', which has a borderline effect (p=0.08). The model explains about 34.25% of the variance in exam scores, whith an overall significant fit (p=0.007), though the residual standard error of 17.19 indicates substantial unexplainable variability.
+The linear model "m1" suggests that only the 'homeworks' variable has a significant positive effect on 'exam' percentages, with each additional point in 'homeworks' increasing it by roughly 21.639. The specialization 'Biostat', 'Epi', and 'Bioinf' show positive coefficients, but none are statistically significant except for 'Bioinf', which has a borderline effect (p=0.08).
 
 ## Question 1b
 
-The output returns a confidence interval of the 'homework' score that ranges between [8.89,34.39]. Thus, it means we are 95% confident that each additional point in 'homeworks' increases the exam score by an amount between 8.89 and 34.39, with other variables held constant. This interval does not include zero, confirming that 'homeworks' has a statistically significant positive effect on exam scores.
+The output returns a confidence interval of the 'homework' that ranges between [8.89,34.39]. Therefore, we are 95% confident that each additional point in 'homeworks' increases the 'exam' by an amount between 8.89 and 34.39 percent, with other variables held constant. This interval does not include zero, confirming that 'homeworks' has a statistically significant positive effect on 'exam'.
 
 ## Question 1c
 
-The p-value for the 'homeworks' coefficient is 0.00154, which is well below the common significant level of 0.05. This indicates that the effect of 'homeworks' on 'exam' scores is statistically significant. We can conclude that there is strong evidence that an increase in 'homeworks' scores is associated with an increase in 'exam' scores, holding other factors constant.
+The p-value for the 'homeworks' coefficient is 0.00154, which is well below the common significant level of 0.05. This indicates that the effect of 'homeworks' on 'exam' is statistically significant. We can conclude that there is strong evidence that an increase in 'homeworks' scores is associated with an increase in 'exam' percentage, holding other factors constant.
 
 ## Question 1d
 
-The estimate of 21.64 in the second model suggests that, on average, each additional point in 'homeworks' is associated with a 21.64 point increase in exam scores, holding 'simulation' and other specialization variables constant. This estimate is just slightly higher than in the original model.
+The estimate of 21.644 in the second model suggests that, on average, each additional point in 'homeworks' is associated with a ~21.64 point increase in 'exam' percentage, holding 'simulation' and other specialization variables constant. This estimate is just slightly higher than in the original model.
 
 ## Question 1e
 
-The interaction effect between 'homeworks' and 'simulation is estimated at 12.22. This means that the effect of 'homeworks' on 'exam' scores changes by 12.22 points for each unit change in simulation and vis-a-vis.
+The interaction effect between 'homeworks' and 'simulation' is estimated at 12.22. This means that the effect of 'homeworks' on 'exam' changes by 12.22 percent for each unit change in simulation and vis-a-vis.
 
-The 95% confidence interval for the interaction term (homeworks:simulation) is [-4.06,28.51]. This range means that we are 95% confident that the true interaction effect lies between -4.06 and 28.51 points. Since the interval includes 0, this sugest that the interactin effect is not statistically significant at 5% level (i.e., it is plausible that the true interaction effect could be zero).
+The 95% confidence interval for the interaction term (homeworks:simulation) is [-4.06,28.51]. This range means that we are 95% confident that the true interaction effect lies between -4.06 and 28.51 percent. Since the interval includes 0, this sugest that the interaction effect is not statistically significant at 5% level (i.e., it is plausible that the true interaction effect could be zero).
 
 ## Question 1f
 
-Base on the model 'm3' results and the correlation between 'homeworks' and 'simulation' (0.0355) in the Appendix section, there does not appear to be a significant problem with multicollinearity in the model. The low correlation between these two variables suggest minimal linear relationshipl and the model's coefficient and standard errors are stable, with no signs of multicollinearity issues such as inflated standard errors or high instability. Additionally, the confidence intervals for the coefficients are reasonably wide but not problematic, and the Adjusted R-squared indicates the model explains a modest portion of the variance without significant interference from collinearity. Therefore, multicolliearity is not a major concern in this case.
+Base on the model in Question 1e (m3) and the correlation between 'homeworks' and 'simulation' (0.0355), there does not appear to be a significant problem with multicollinearity in the model. The low correlation between these two variables suggest minimal linear relationship and the model's coefficient and standard errors are stable, with no signs of multicollinearity issues such as inflated standard errors or high instability. Additionally, the confidence intervals for the coefficients are reasonably wide but not problematic, and the Adjusted R-squared indicates the model explains a modest portion of the variance without significant interference from collinearity. Therefore, multicolliearity is not a major concern in this case.
 
 ## Question 1g
 
-The analyses shows a clear and consistent positive relationship between homework scores and exam scores. In all models, homework is a significant predictor of exam performance, with higher homework scores linked to better exam results. Specifically, for each unit increase in homework score, exam scores tend to increase by about 21 points. This suggest that doing well on homework is a strong indicator of success on the exam, while other factors, including simulations, have less impact.
+The analyses shows a clear and consistent positive relationship between homework and exam scores. In all models, 'homework' is a significant predictor of exam performance, with higher 'homework' scores linked to better 'exam' results. Specifically, for each unit increase in 'homework' score, 'exam' scores tend to increase by about 21 percent. This suggest that doing well on homework is a strong indicator of success on the exam, while other factors, including simulations, have less impact.
 
 \newpage
 
@@ -55,6 +55,10 @@ exam$Biostat<-as.numeric(exam$specialisation=="BS")
 exam$DataSc<-as.numeric(exam$specialisation=="D")
 exam$Bioinf<-as.numeric(exam$specialisation=="BI")
 exam$Epi<-as.numeric(exam$specialisation=="E")
+```
+
+```{r}
+library(car) # To use the alias() - identify redundant variables by showiung which coeffcients are linearly dependent on others - and vif() - variance inflation factor, to detect multicollinearity in multiple regression- functions
 ```
 
 ```{r}
@@ -88,4 +92,12 @@ confint(m3, level = 0.95)
 
 # Looking at the correlation between homeworks and simulation
 cor(exam[c("homeworks","simulation")])
+```
+
+
+```{r}
+# Calculate for linear independence and variance inflation factor
+alias(m3)
+
+vif(m3, type = "predictor")
 ```
