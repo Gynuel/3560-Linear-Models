@@ -1,0 +1,98 @@
+---
+title: "Linear Models: Homework 3"
+author: "Emanuel Gloria"
+date: "2024-2025"
+output: pdf_document
+css: style.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Answers to the questions
+
+## Question 1a
+For analyzing the effects of light intensity on algal growth while accounting for different water sources, a two-way ANOVA (analysis of variance) model would be suitable.
+
+The two-way ANOVA model with interaction effects is well-suited to analyze the effects of light intensity on algal growth across different water sources in this study. Given that light intensity and water source are the primary variables influencing algal growth, this model will enable us to assess both the individual (main) effects and the potential interaction between these factors. The main effect of light intensity will reveal if changes in light levels alone significantly impact algal growth, which is essential to understanding how variations in environmental light influence aquatic ecosystems. The main effect of water source, accounting for diverse nutrient profiles, will indicate whether the origin of the water samples independently affects algal growth. Most importantly, the interaction effect between light intensity and water source will help determine if the influence of light on algal growth is modulated by the specific nutrient and environmental characteristics of each water source.
+
+This insight is crucial for interpreting how complex interactions between environmental factors impact algal growth dynamics, contributing valuable information for ecosystem management and conservation efforts.
+
+Provided below is the research question of this problem and its factor effects model:
+
+#### Research Question
+
+- What are the effects of light intensity on algal growth, taking into account different water sources? This study aims to determine how light intensity, an environmental factor, influences algal growth in aquatic ecosystems.
+
+#### Variables and Levels
+
+- **Dependent Variable:** Algal growth (measured in mg/L).
+- **Independent Variables (Factors):**
+  - **Light Intensity (3 levels):** Low, Medium, High
+  - **Water Source (3 levels):** River, Lake, Pond
+
+#### Factor Effects Model and Definition
+
+The two-way ANOVA model with interaction effects is formulated as:
+\[
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha \beta)_{ij} + \epsilon_{ijk}
+\]
+
+where:
+
+- **\( y_{ijk} \)**: The measured algal growth for the \(i\)-th light intensity level, \(j\)-th water source, and \(k\)-th sample.
+- **\( \mu \)**: The overall mean algal growth rate.
+- **\( \alpha_i \)**: The main effect of the \(i\)-th level of light intensity.
+- **\( \beta_j \)**: The main effect of the \(j\)-th level of water source.
+- **\( (\alpha \beta)_{ij} \)**: The interaction effect between the \(i\)-th level of light intensity and \(j\)-th level of water source.
+- **\( \epsilon_{ijk} \)**: The error term for each observation, assumed to be normally distributed with mean zero and constant variance (\(N(0, \sigma^2)\)).
+
+## Question 1b
+
+#### Hypotheses
+
+1. **For Light Intensity (main effect):**
+   - Null Hypothesis (\(H_0\)): Light intensities does not significantly affect algal growth.
+   - Alternative Hypothesis (\(H_a\)): Light intensities significantly affects algal growth.
+
+2. **For Water Source (main effect):**
+   - Null Hypothesis (\(H_0\)): Water sources does not significantly affect algal growth.
+   - Alternative Hypothesis (\(H_a\)): Water sources significantly affects algal growth.
+
+3. **For Interaction (Light Intensity x Water Source):**
+   - Null Hypothesis (\(H_0\)): There is no interaction effect between light intensity and water source on algal growth.
+   - Alternative Hypothesis (\(H_a\)): There is a significant interaction effect between light intensity and water source on algal growth.
+
+```{r, echo=FALSE, fig.cap="Two-way ANOVA Model", out.width="50%", fig.align = 'center'}
+knitr::include_graphics("/Users/eman/Documents/3560_LIMO/Assignments/HW3/ANOVA.png")
+```
+
+
+The results show that light intensity has a significant effect on algal biomass (p < 0.0001), indicating that different levels of light intensity lead to statistically significant changes in algal growth.
+
+The effects of water sources and the interaction between light intensities and water sources are not significant, which suggests that while light intensity alone affects algal growth, the different water sources do not significantly alter this effect. Thus, we conclude that light intensity is an important environmental factor influencing algal growth, independent of the nutrient differences in the water sources.
+
+Moreover, given the high F-value and low p-value for the light intensity effect, the effect size for light intensity is likely substantial, contributing significantly to the total variance in algal biomass. This means that light intensity has a strong practical impact on algal growth, with a large portion of the variation in biomass measurements directly attributable to differences in light intensity rather than other factors.
+
+```{r, echo=FALSE, fig.cap="Tukey's Test Results", out.width="50%", fig.align = 'center'}
+knitr::include_graphics("/Users/eman/Documents/3560_LIMO/Assignments/HW3/TUKEY.png")
+```
+The results of the pairwise comparison and confidence intervals also confirms that higher light intensities lead to significantly higher algal growth. Each pairwise comparison shows that differences between light intensities (High, Medium, Low) are statistically significant, reinforcing the finding that light intensity has a strong influence on algal biomass growth.
+
+## Question 1c
+
+The statistical tests and residual plot indicate that the assumptions of the two-way ANOVA are met. The Levene's test and Shapiro-Wilk test suggest homogeneity of variance and normality of residuals, respectively. Additionally, the random scatter of points in the residual plot supports the assumption of independence.
+
+Given that the assumptions of the two-way ANOVA are met, we can say that the above analyses are valid and reliable. Meaning, it's relatively accurate about the effects of the independent variables on the dependent variable.
+
+```{r, echo=FALSE, fig.cap="Normality Test", out.width="40%", fig.align = 'center'}
+knitr::include_graphics("/Users/eman/Documents/3560_LIMO/Assignments/HW3/NORMALITY.png")
+```
+
+```{r, echo=FALSE, fig.cap="Homogeneity Test", out.width="40%", fig.align = 'center'}
+knitr::include_graphics("/Users/eman/Documents/3560_LIMO/Assignments/HW3/HOMOGENEITY.png")
+```
+
+```{r, echo=FALSE, fig.cap="Homogeneity Test", out.width="40%", fig.align = 'center'}
+knitr::include_graphics("/Users/eman/Documents/3560_LIMO/Assignments/HW3/INDEPENDENCE.png")
+```
